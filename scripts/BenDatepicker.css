@@ -1,0 +1,52 @@
+.ben-datepicker-container{
+	position: relative;
+}
+
+.ben-datepicker-select-date{
+	border: 2px solid #888;
+	border-radius: 4px;
+	padding: .2em;
+}
+
+.ben-datepicker-select-date-text1{
+
+}
+
+
+.ben-datepicker-select-date{
+	position: absolute;
+	background-color: white;
+}
+
+.ben-datepicker-hide{
+	visibility: hidden;
+	//display: none;
+}
+
+.ben-datepicker-show{
+	visibility: visible;
+	//display: block;
+}
+
+.ben-datepicker-calendar-table tbody tr td {
+	padding: 0.2em;
+	//color: red;
+	text-align: center;
+	font-family: sans-serif;
+	font-size: smaller;
+
+}
+
+.ben-datepicker-calendar-table tbody tr td:hover {
+	background-color: #999;
+	border-radius: 7px;
+	cursor: pointer;
+}
+
+.thisMonth{
+
+}
+
+.otherMonth{
+	color: #666;
+}
