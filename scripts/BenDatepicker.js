@@ -61,17 +61,16 @@ export default class BenDatepicker extends MonthPicker {
 						my_start_weekday--;
 						my_day = days_in_previous_month - (my_start_weekday)
 						is_recent_month
-						is_recent_month = false;
+						is_recent_month = "last";
 			     	}else{			 //this month
-			     		my_start_weekday = "x";     			
 			     		days_written++;
-			     		is_recent_month = true;
+			     		is_recent_month = "recent";
 			    	}
 			    	//console.log(my_day + " " + my_start_weekday + " " +my_day)
-			    	days[week_num-1][i] = {dayNum: my_day, isRecentMonth: is_recent_month, weekNum: week_num}; //recent_day_obj
+			    	days[week_num-1][i] = {dayNum: my_day, isRecentMonth: is_recent_month, weekNum: week_num};
 		      	}else{ //next month
 		      		days_for_next_month++;
-		      		days[week_num-1][i] = {dayNum: days_for_next_month, isRecentMonth: false, weekNum: week_num}; //recent_day_obj
+		      		days[week_num-1][i] = {dayNum: days_for_next_month, isRecentMonth: "next", weekNum: week_num}; //recent_day_obj
 		      	}
 		      	
 	      	}
@@ -94,7 +93,7 @@ export default class BenDatepicker extends MonthPicker {
   			{ this.getDayMatrix(2).map(x => <tr key={"week-"+x[0].weekNum}>{x.map(y => 
   				<td key={"day-"+y.weekNum+"-"+y.dayNum} 
   				onClick={() => this.OnDayClick(y.dayNum)} 
-  				className={y.isRecentMonth ? "thisMonth" : "otherMonth"}
+  				className={y.isRecentMonth + "Month"}
   				>{y.dayNum}</td>)}</tr>)}
   		</tbody>
   		</table>
