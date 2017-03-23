@@ -16,7 +16,8 @@ export default class BenDatepicker extends MonthPicker {
 			locale: props.locale ? props.locale : "en-US",
 			day: new Date().getDate(),
 			month: new Date().getMonth() + 1,
-			year: new Date().getFullYear()
+			year: new Date().getFullYear(),
+			last_clicked_day_html: null
 		}
 		//this.getDayMatrix(2);
 		this.getDayMatrix = this.getDayMatrix.bind(this);
@@ -99,8 +100,11 @@ export default class BenDatepicker extends MonthPicker {
   /**
 	* Click on single day in in datepicker matrix
 	*/
-  OnDayClick(day){
-  	this.setState({day: day});
+  OnDayClick(day, event){
+		let selected_day_css_class = "recent-day"
+  	this.setState({day: day, last_clicked_day_html: event.target});
+		this.state.last_clicked_day_html && this.state.last_clicked_day_html.classList.remove(selected_day_css_class);
+		event.target.classList.add(selected_day_css_class);
   }
 
   /**
@@ -112,7 +116,7 @@ export default class BenDatepicker extends MonthPicker {
   		<tbody>
   			{ this.getDayMatrix(2).map(x => <tr key={"week-"+x[0].weekNum}>{x.map(y =>
   				<td key={"day-"+y.weekNum+"-"+y.dayNum}
-  				onClick={() => this.OnDayClick(y.dayNum)}
+  				onClick={(event) => this.OnDayClick(y.dayNum, event)}
   				className={y.isRecentMonth + "Month"}
   				>{y.dayNum}</td>)}</tr>)}
   		</tbody>

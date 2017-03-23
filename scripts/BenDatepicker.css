@@ -38,8 +38,14 @@
 }
 
 .ben-datepicker-calendar-table tbody tr td:hover {
-	background-color: #999;
-	border-radius: 7px;
+	background-color: #aaa;
+	border-radius: 9px;
+	cursor: pointer;
+}
+
+.ben-datepicker-calendar-table tbody tr td.recent-day{
+	background-color: orange;
+	border-radius: 9px;
 	cursor: pointer;
 }
 
