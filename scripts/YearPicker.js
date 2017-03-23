@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import './BenDatepicker.css';
-import * as moment from 'moment';
 
 export default class YearPicker extends Component {
 

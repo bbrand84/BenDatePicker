@@ -23,6 +23,7 @@ export default class BenDatepicker extends MonthPicker {
 		this.getDayHTML = this.getDayHTML.bind(this);
 		this.OnDayClick = this.OnDayClick.bind(this);
 		this.onYearChange = this.onYearChange.bind(this);
+		this.onMonthChange = this.onMonthChange.bind(this);
 		this.pad = this.pad.bind(this);
 	}
 
@@ -45,7 +46,7 @@ export default class BenDatepicker extends MonthPicker {
   }
 
 	/**
-	* returns class name for date pcike field, with purpose of hiding it
+	* returns class name for date picker field, with purpose of hiding it
 	*/
   getDatePickerSelectTextClassName(){
   	return "ben-datepicker-select-date " + (this.state.showSelector? 'ben-datepicker-show' : 'ben-datepicker-hide')
@@ -137,6 +138,16 @@ export default class BenDatepicker extends MonthPicker {
   	);
   }
 
+	/**
+	* On changing month selection drop down
+	*/
+	onMonthChange(month){
+		console.log(month)
+		this.setState(
+			{month: month}
+		);
+	}
+
   /**
 	* React's rendering method
 	*/
@@ -151,7 +162,7 @@ export default class BenDatepicker extends MonthPicker {
 	      	value={this.pad(this.state.day,2)+"."+this.pad(this.state.month,2)+"."+this.state.year}
 	      />
 	      <div className={this.getDatePickerSelectTextClassName.bind(this)()}>
-	      <MonthPicker /><YearPicker OnChange={e => this.onYearChange(e)} />
+	      <MonthPicker selected={this.state.month} onChangeMonth={this.onMonthChange} /><YearPicker OnChange={e => this.onYearChange(e)} />
 	      {this.getDayHTML.bind(this)()}
 	      </div>
 	    </div>
