@@ -12,8 +12,8 @@ export default class BenDatepicker extends MonthPicker {
 		this.state = {
 			showSelector: false,
 			locale: props.locale ? props.locale : "en-US",
-			day: 1,
-			month: 2,
+			day: new Date().getDate(),
+			month: new Date().getMonth() + 1,
 			year: new Date().getFullYear()
 		}
 		moment.locale(this.state.locale);
@@ -55,7 +55,7 @@ export default class BenDatepicker extends MonthPicker {
 	      		let my_day = days_written;
 	      		my_day = days_written;
 		      	//let recent_day_obj = {dayNum: my_day}
-		      	if (days_written <= days_in_month){ 
+		      	if (days_written <= days_in_month){
 		      		let is_recent_month
 		      		if(my_start_weekday > 0){ //last Month
 						my_start_weekday--;
@@ -72,7 +72,7 @@ export default class BenDatepicker extends MonthPicker {
 		      		days_for_next_month++;
 		      		days[week_num-1][i] = {dayNum: days_for_next_month, isRecentMonth: "next", weekNum: week_num}; //recent_day_obj
 		      	}
-		      	
+
 	      	}
 	      	week_num++;
 	      }
@@ -90,9 +90,9 @@ export default class BenDatepicker extends MonthPicker {
   	return (
   		<table className="ben-datepicker-calendar-table">
   		<tbody>
-  			{ this.getDayMatrix(2).map(x => <tr key={"week-"+x[0].weekNum}>{x.map(y => 
-  				<td key={"day-"+y.weekNum+"-"+y.dayNum} 
-  				onClick={() => this.OnDayClick(y.dayNum)} 
+  			{ this.getDayMatrix(2).map(x => <tr key={"week-"+x[0].weekNum}>{x.map(y =>
+  				<td key={"day-"+y.weekNum+"-"+y.dayNum}
+  				onClick={() => this.OnDayClick(y.dayNum)}
   				className={y.isRecentMonth + "Month"}
   				>{y.dayNum}</td>)}</tr>)}
   		</tbody>
@@ -121,10 +121,10 @@ export default class BenDatepicker extends MonthPicker {
     	<div className="ben-datepicker-container">
 
 	      <input
-	      	type="text" 
-	      	onChange={this.onChangeRaw.bind(this)} 
+	      	type="text"
+	      	onChange={this.onChangeRaw.bind(this)}
 	      	onClick={this.onClick.bind(this)}
-	      	value={this.pad(this.state.day,2)+"."+this.pad(this.state.month,2)+"."+this.state.year} 
+	      	value={this.pad(this.state.day,2)+"."+this.pad(this.state.month,2)+"."+this.state.year}
 	      />
 	      <div className={this.getDatePickerSelectTextClassName.bind(this)()}>
 	      <MonthPicker /><YearPicker OnChange={e => this.onYearChange(e)} />
