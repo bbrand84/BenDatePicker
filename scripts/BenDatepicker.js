@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import './BenDatepicker.css'
 import './BenDatepicker.css'
-import * as moment from 'moment';
 import YearPicker from './YearPicker.js'
 import MonthPicker from './MonthPicker.js'
 
 export default class BenDatepicker extends MonthPicker {
 
+	/**
+	* React's constructor method
+	*/
 	constructor(props){
         super(props);
 		this.state = {
@@ -16,7 +18,6 @@ export default class BenDatepicker extends MonthPicker {
 			month: new Date().getMonth() + 1,
 			year: new Date().getFullYear()
 		}
-		moment.locale(this.state.locale);
 		//this.getDayMatrix(2);
 		this.getDayMatrix = this.getDayMatrix.bind(this);
 		this.getDayHTML = this.getDayHTML.bind(this);
@@ -25,10 +26,16 @@ export default class BenDatepicker extends MonthPicker {
 		this.pad = this.pad.bind(this);
 	}
 
+	/**
+	* when typing in text field
+	*/
   onChangeRaw(){
-  		let mydate = moment()
+  		//TODO
   }
 
+  /**
+	* Click on Text field, opens datepicker widget
+	*/
   onClick(){
   		this.setState(
   			{
@@ -37,18 +44,25 @@ export default class BenDatepicker extends MonthPicker {
 
   }
 
+	/**
+	* returns class name for date pcike field, with purpose of hiding it
+	*/
   getDatePickerSelectTextClassName(){
   	return "ben-datepicker-select-date " + (this.state.showSelector? 'ben-datepicker-show' : 'ben-datepicker-hide')
   }
 
+	/**
+	* Returns 2 dim array containing days
+	* param start_weekday: weekday of the first of the month (0..6, 0=monday)
+	*/
   getDayMatrix(start_weekday=1){
   	let my_start_weekday = start_weekday
   	let days = [];
   	const days_in_month = 28;
   	const days_in_previous_month = 30;
-	let days_written = 1;
-	let week_num = 1;
-	let days_for_next_month = 0;
+	  let days_written = 1;
+	  let week_num = 1;
+	  let days_for_next_month = 0;
 	    while(days_written < days_in_month){
 	    	days[week_num-1] = [];
 	      	for (let i=0; i < 7; i++) {
@@ -81,12 +95,17 @@ export default class BenDatepicker extends MonthPicker {
 
   }
 
+  /**
+	* Click on single day in in datepicker matrix
+	*/
   OnDayClick(day){
   	this.setState({day: day});
   }
 
+  /**
+	* Returns HTML table containing days
+	*/
   getDayHTML(){
-
   	return (
   		<table className="ben-datepicker-calendar-table">
   		<tbody>
@@ -109,14 +128,19 @@ export default class BenDatepicker extends MonthPicker {
     return s;
   }
 
+	/**
+	* On changing year selection drop down
+	*/
   onYearChange(event){
   	this.setState(
   		{year: event.target.value}
   	);
   }
 
+  /**
+	* React's rendering method
+	*/
   render() {
-
     return (
     	<div className="ben-datepicker-container">
 

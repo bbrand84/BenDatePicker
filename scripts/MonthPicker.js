@@ -4,10 +4,16 @@ import * as moment from 'moment';
 
 export default class MonthPicker extends Component {
 
+	/**
+	* React's constructor method
+	*/
 	constructor(props){
 		super(props);
 	}
 
+	/**
+	* React's rendering method
+	*/
 	render(){
 		return(
 			<select>
