@@ -9,19 +9,11 @@ export default class YearPicker extends Component {
 	constructor(props){
 		super(props);
 		this.state = {
+			handleChangeCallback: props.onChangeYear ? props.onChangeYear : (e) => console.log("no OnChange callback method passed from parent"),
+			year_selected: props.selected ? props.selected : new Date().getFullYear(),
+			recent_year: new Date().getFullYear()
 		}
 
-		if(props.OnChange){ //} && getClass.call(props.OnChange) == '[object Function]'){
-			this.OnChange = props.OnChange;
-		}else{
-			this.OnChange = (x) => console.log("No date change function assigned!" + x);
-		}
-
-		if(props.selectedValue){ //} && getClass.call(props.OnChange) == '[object Function]'){
-			this.state.recentYear = props.selectedValue;
-		}else{
-			this.state.recentYear = new Date().getFullYear();
-		}
 	}
 
 	/**
@@ -33,11 +25,11 @@ export default class YearPicker extends Component {
 	createYearList(numBefore, numAfter){
 		let result = [];
 		let last_index = 0;
-		for(let before = this.state.recentYear - numBefore; before < this.state.recentYear; before++){
+		for(let before = this.state.recent_year - numBefore; before < this.state.recent_year; before++){
 			result[last_index] = before;
 			last_index++;
 		}
-		for(let after = this.state.recentYear; after <= this.state.recentYear + numAfter; after++){
+		for(let after = this.state.recent_year; after <= this.state.recent_year + numAfter; after++){
 			result[last_index] = after;
 			last_index++;
 		}
@@ -45,12 +37,17 @@ export default class YearPicker extends Component {
 
 	}
 
+	handleChange(event){
+		this.setState({year_selected: event.target.value});
+		this.state.handleChangeCallback(event.target.value);
+	}
+
 	/**
 	* React's rendering method
 	*/
 	render(){
 		return(
-			<select onChange={(x) => this.OnChange(x)} value={this.state.recentYear}>
+			<select value={this.state.year_selected} onChange={(event) => this.handleChange(event)}>
 				{this.createYearList(3,15).map(x => <option key={x} value={x} >{x}</option>)}
 			</select>
 			);
