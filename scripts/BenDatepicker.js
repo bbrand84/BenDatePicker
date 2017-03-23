@@ -142,7 +142,6 @@ export default class BenDatepicker extends MonthPicker {
 	* On changing month selection drop down
 	*/
 	onMonthChange(month){
-		console.log(month)
 		this.setState(
 			{month: month}
 		);
@@ -154,7 +153,6 @@ export default class BenDatepicker extends MonthPicker {
   render() {
     return (
     	<div className="ben-datepicker-container">
-
 	      <input
 	      	type="text"
 	      	onChange={this.onChangeRaw.bind(this)}

@@ -12,7 +12,6 @@ export default class MonthPicker extends Component {
 			month_selected: props.selected ? props.selected : 12,
 			handleChangeCallback: props.onChangeMonth ? props.onChangeMonth : (e) => console.log("no OnChange callback method passed from parent")
 		}
-		console.log(this.state.handleChange)
 		this.handleChange = this.handleChange.bind(this);
 	}
 
