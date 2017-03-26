@@ -157,8 +157,13 @@ export default class BenDatepicker extends MonthPicker {
 	* On changing month selection drop down
 	*/
 	onMonthChange(month){
+		console.log(month)
+
 		this.setState(
-			{month: month}
+			{
+				month: Number(month),
+				month_relative: 0
+			}
 		);
 	}
 
@@ -172,7 +177,7 @@ export default class BenDatepicker extends MonthPicker {
 	      	type="text"
 	      	onChange={this.onChangeRaw.bind(this)}
 	      	onClick={this.onClick.bind(this)}
-	      	value={this.pad(this.state.day,2)+"."+this.pad(this.state.month + this.state.month_relative, 2)+"."+this.state.year}
+	      	value={this.pad(this.state.day,2)+"."+this.pad((this.state.month + this.state.month_relative), 2)+"."+this.state.year}
 	      />
 	      <div className={this.getDatePickerSelectTextClassName.bind(this)()}>
 	      <MonthPicker selected={this.state.month} onChangeMonth={this.onMonthChange} /><YearPicker onChangeYear={this.onYearChange} />
