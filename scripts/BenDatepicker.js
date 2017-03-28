@@ -59,11 +59,14 @@ export default class BenDatepicker extends MonthPicker {
 	* Returns 2 dim array containing days
 	* param start_weekday: weekday of the first of the month (0..6, 0=monday)
 	*/
-  getDayMatrix(start_weekday=1){
-  	let my_start_weekday = start_weekday
+  getDayMatrix(date=new Date()){
   	let days = [];
-  	const days_in_month = 28;
-  	const days_in_previous_month = 30;
+		const day = date.getDate();
+		const month = date.getMonth(); //0..11
+		const year = date.getYear() + 1900;
+		let start_weekday = new Date(year, month, 1).getDay()-1; //1..7
+  	const days_in_month = new Date(year, month+1, 0).getDate();
+  	const days_in_previous_month = new Date(year, month , 0).getDate();
 	  let days_written = 1;
 	  let week_num = 1;
 	  let days_for_next_month = 0;
@@ -75,16 +78,16 @@ export default class BenDatepicker extends MonthPicker {
 		      	//let recent_day_obj = {dayNum: my_day}
 		      	if (days_written <= days_in_month){
 		      		let is_recent_month
-		      		if(my_start_weekday > 0){ //last Month
-						my_start_weekday--;
-						my_day = days_in_previous_month - (my_start_weekday)
+		      		if(start_weekday > 0){ //last Month
+						start_weekday--;
+						my_day = days_in_previous_month - (start_weekday)
 						is_recent_month
 						is_recent_month = "last";
 			     	}else{			 //this month
 			     		days_written++;
 			     		is_recent_month = "recent";
 			    	}
-			    	//console.log(my_day + " " + my_start_weekday + " " +my_day)
+			    	//console.log(my_day + " " + start_weekday + " " +my_day)
 			    	days[week_num-1][i] = {dayNum: my_day, isRecentMonth: is_recent_month, weekNum: week_num};
 		      	}else{ //next month
 		      		days_for_next_month++;
@@ -94,9 +97,8 @@ export default class BenDatepicker extends MonthPicker {
 	      	}
 	      	week_num++;
 	      }
-
-	      return days
-
+				// days = [['Mo','Di','Mi','Do','Fr','Sa','So']].concat(days);
+			return days;
   }
 
 
@@ -125,7 +127,7 @@ export default class BenDatepicker extends MonthPicker {
   	return (
   		<table className="ben-datepicker-calendar-table">
   		<tbody>
-  			{ this.getDayMatrix(2).map(x => <tr key={"week-"+x[0].weekNum}>{x.map(y =>
+  			{ this.getDayMatrix(new Date(this.state.year, this.state.month-1, this.state.day)).map(x => <tr key={"week-"+x[0].weekNum}>{x.map(y =>
   				<td key={"day-"+y.weekNum+"-"+y.dayNum}
   				onClick={(event) => this.OnDayClick(y.dayNum, event)}
   				className={y.isRecentMonth + "Month"}
