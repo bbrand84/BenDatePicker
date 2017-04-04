@@ -4,6 +4,7 @@ import './BenDatepicker.css'
 import YearPicker from './YearPicker.js'
 import MonthPicker from './MonthPicker.js'
 
+
 export default class BenDatepicker extends MonthPicker {
 
 	/**
@@ -59,14 +60,16 @@ export default class BenDatepicker extends MonthPicker {
 	* Returns 2 dim array containing days
 	* param start_weekday: weekday of the first of the month (0..6, 0=monday)
 	*/
-  getDayMatrix(date=new Date()){
+  getDayMatrix(date){
   	let days = [];
 		const day = date.getDate();
 		const month = date.getMonth(); //0..11
 		const year = date.getYear() + 1900;
-		let start_weekday = new Date(year, month, 1).getDay()-1; //1..7
-  	const days_in_month = new Date(year, month+1, 0).getDate();
-  	const days_in_previous_month = new Date(year, month , 0).getDate();
+		let start_weekday = new Date(year, month, 1).getDay(); //0..6, sun(0) - sat(6)
+  	const days_in_month = new Date(0, month+1, 0).getDate();
+		let y = month == 0 ? year-1 : year
+		let m = (month == 0 ? 11 : month)
+  	const days_in_previous_month = new Date(0, (month == 0 ? 12 : month) , 0).getDate();
 	  let days_written = 1;
 	  let week_num = 1;
 	  let days_for_next_month = 0;
@@ -75,23 +78,26 @@ export default class BenDatepicker extends MonthPicker {
 	      	for (let i=0; i < 7; i++) {
 	      		let my_day = days_written;
 	      		my_day = days_written;
+						let my_month;
 		      	//let recent_day_obj = {dayNum: my_day}
 		      	if (days_written <= days_in_month){
 		      		let is_recent_month
 		      		if(start_weekday > 0){ //last Month
-						start_weekday--;
-						my_day = days_in_previous_month - (start_weekday)
-						is_recent_month
-						is_recent_month = "last";
-			     	}else{			 //this month
-			     		days_written++;
-			     		is_recent_month = "recent";
-			    	}
-			    	//console.log(my_day + " " + start_weekday + " " +my_day)
-			    	days[week_num-1][i] = {dayNum: my_day, isRecentMonth: is_recent_month, weekNum: week_num};
+								start_weekday--;
+								my_day = days_in_previous_month - (start_weekday)
+								is_recent_month = "last";
+								my_month = (month == 0 ? 11 : month-1);
+				     	}else{			 //this month
+								my_month = month;
+				     		days_written++;
+				     		is_recent_month = "recent";
+				    	}
+			    		//console.log(my_day + " " + start_weekday + " " +my_day)
+							//console.log({month: my_month+1, year: year, dayNum: my_day, isRecentMonth: is_recent_month, weekNum: week_num});
+			    		days[week_num-1][i] = {month: my_month+1, year: year, dayNum: my_day, isRecentMonth: is_recent_month, weekNum: week_num};
 		      	}else{ //next month
 		      		days_for_next_month++;
-		      		days[week_num-1][i] = {dayNum: days_for_next_month, isRecentMonth: "next", weekNum: week_num}; //recent_day_obj
+		      		days[week_num-1][i] = {month: (month == 0 ? 11 : month-1)+1, year: year, dayNum: days_for_next_month, isRecentMonth: "next", weekNum: week_num}; //recent_day_obj
 		      	}
 
 	      	}
@@ -122,10 +128,18 @@ export default class BenDatepicker extends MonthPicker {
 
   /**
 	* Returns HTML table containing days
+	* new Date().toLocaleString('en-us', {  weekday: 'long' })
 	*/
   getDayHTML(){
   	return (
   		<table className="ben-datepicker-calendar-table">
+			<thead><tr>
+			{ this.getDayMatrix(new Date(this.state.year, this.state.month-1, this.state.day))[0].map(x =>
+				<td key={"dayname-"+x.weekNum+"-"+x.dayNum}
+				className={"dayname-"+x.dayNum+"-"+x.month+"-"+x.year}
+				>{new Date(x.year, x.month-1, x.dayNum).toLocaleString(this.state.locale, {  weekday: 'short' }).substring(0,2)}</td>)
+			}
+			</tr></thead>
   		<tbody>
   			{ this.getDayMatrix(new Date(this.state.year, this.state.month-1, this.state.day)).map(x => <tr key={"week-"+x[0].weekNum}>{x.map(y =>
   				<td key={"day-"+y.weekNum+"-"+y.dayNum}
@@ -182,7 +196,7 @@ export default class BenDatepicker extends MonthPicker {
 	      	value={this.pad(this.state.day,2)+"."+this.pad((this.state.month + this.state.month_relative), 2)+"."+this.state.year}
 	      />
 	      <div className={this.getDatePickerSelectTextClassName.bind(this)()}>
-	      <MonthPicker selected={this.state.month} onChangeMonth={this.onMonthChange} /><YearPicker onChangeYear={this.onYearChange} />
+	      <MonthPicker selected={this.state.month} onChangeMonth={this.onMonthChange} locale={this.state.locale}/><YearPicker onChangeYear={this.onYearChange} />
 	      {this.getDayHTML.bind(this)()}
 	      </div>
 	    </div>

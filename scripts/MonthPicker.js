@@ -26,18 +26,18 @@ export default class MonthPicker extends Component {
 	render(){
 		return(
 			<select value={this.state.month_selected} onChange={(event) => this.handleChange(event)}>
-				  <option value="1">january</option>
-					<option value="2">february</option>
-				  <option value="3">march</option>
-				  <option value="4">april</option>
-				  <option value="5">may</option>
-				  <option value="6">june</option>
-				  <option value="7">july</option>
-				  <option value="8">august</option>
-				  <option value="9">september</option>
-				  <option value="10">october</option>
-				  <option value="11">november</option>
-				  <option value="12">december</option>
+				  <option value="1">{new Date(0,1,0).toLocaleString('de', {  month: 'long' })}</option>
+					<option value="2">{new Date(0,2,0).toLocaleString('de', {  month: 'long' })}</option>
+				  <option value="3">{new Date(0,3,0).toLocaleString('de', {  month: 'long' })}</option>
+				  <option value="4">{new Date(0,4,0).toLocaleString('de', {  month: 'long' })}</option>
+				  <option value="5">{new Date(0,5,0).toLocaleString('de', {  month: 'long' })}</option>
+				  <option value="6">{new Date(0,6,0).toLocaleString('de', {  month: 'long' })}</option>
+				  <option value="7">{new Date(0,7,0).toLocaleString('de', {  month: 'long' })}</option>
+				  <option value="8">{new Date(0,8,0).toLocaleString('de', {  month: 'long' })}</option>
+				  <option value="9">{new Date(0,9,0).toLocaleString('de', {  month: 'long' })}</option>
+				  <option value="10">{new Date(0,10,0).toLocaleString('de', {  month: 'long' })}</option>
+				  <option value="11">{new Date(0,11,0).toLocaleString('de', {  month: 'long' })}</option>
+				  <option value="12">{new Date(0,12,0).toLocaleString('de', {  month: 'long' })}</option>
 
 			</select>
 			);

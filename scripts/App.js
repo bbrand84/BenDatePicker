@@ -6,7 +6,9 @@ export default class App extends Component {
     return (
     	<div>
       		<h1>Hello, World!</h1>
-      		<BenDatepicker />
+      		<BenDatepicker  locale="de" />
+          <BenDatepicker  locale="en-us" />
+          <BenDatepicker  locale="de-de" />
       	</div>
     );
   }

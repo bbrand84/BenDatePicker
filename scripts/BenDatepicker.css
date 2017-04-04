@@ -37,6 +37,11 @@
 
 }
 
+.ben-datepicker-calendar-table thead tr td {
+	border-bottom: 1px solid #555;
+
+}
+
 .ben-datepicker-calendar-table tbody tr td:hover {
 	background-color: #aaa;
 	border-radius: 9px;
@@ -55,4 +60,9 @@
 
 .lastMonth, .nextMonth{
 	color: #666;
+}
+
+.day-name{
+	font-size: smaller;
+	text-transform: uppercase;
 }
