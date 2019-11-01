@@ -1,5 +1,7 @@
 # A simple React DatePicker
 
+![example picture of date picker](https://github.com/bbrand84/BenDatePicker/raw/master/example.png)
+
 in a Webpack environment.
 
 Recently under development!!
